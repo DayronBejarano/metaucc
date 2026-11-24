@@ -1,0 +1,44 @@
+EDIFICIO UCC – SEDE VILLAVICENCIO (modelo 3D para Unity)
+Proyecto de grado: videojuego educativo en realidad virtual (Unity + Meta Quest 3)
+Autor: Felipe Vanegas
+
+CONTENIDO
+  Assets/Edificio_UCC/Modelos/UCC_CONPUPITRES.skp       Edificio completo con pupitres (SketchUp 2026, ~12 MB)
+  Assets/Edificio_UCC/Modelos/UCC_CONPUPITRES.skp.meta  Configuración de importación (escala en metros, colisiones generadas)
+  Assets/Edificio_UCC/Modelos/UCC_SINPUPITRES.fbx       Versión sin pupitres (FBX, más liviana)
+  Assets/Edificio_UCC/Scripts/AjustesVisuales.cs        Arreglos automáticos del edificio en tiempo de ejecución
+  Assets/Resources/Tesis_DobleCara.shader               Shader que dibuja las caras por ambos lados
+
+REQUISITOS
+  - Unity 2022.3 LTS (probado con 2022.3.62f3), Built-in Render Pipeline.
+  - El .skp lo importa Unity directamente (importador de SketchUp incluido en el editor de Windows/Mac).
+    Para abrirlo en SketchUp se necesita SketchUp 2026 o superior.
+
+CÓMO USARLO
+  1. Copia la carpeta "Assets" de este .zip dentro de la carpeta de tu proyecto de Unity
+     (se mezcla con tu Assets; el shader DEBE quedar en una carpeta llamada "Resources").
+  2. Espera a que Unity importe el modelo (puede tardar varios minutos la primera vez).
+  3. Arrastra UCC_CONPUPITRES (o UCC_SINPUPITRES) a la escena. Deja el nombre del objeto
+     tal cual: el script lo busca por ese nombre.
+  4. En nuestro proyecto el modelo .skp quedó girado 180° en Y respecto al FBX; si usas los dos,
+     gira el .skp 180° para que coincidan. Escala 1 = metros.
+  5. Dale Play: AjustesVisuales se aplica solo (no hay que agregarlo a ningún objeto).
+
+QUÉ HACE AjustesVisuales.cs (y por qué)
+  - SketchUp exporta caras de un solo lado: desde dentro de salones y pasillos algunos muros y
+    techos no se ven ("se ve a través"). El script cambia los materiales del edificio por el
+    shader Tesis/DobleCara (mismo color y textura) para que se vean por ambos lados.
+  - Activa Physics.queriesHitBackfaces para que los rayos/colisiones detecten esos muros desde atrás.
+  - Pone cielo, luz ambiente en tres tonos y niebla suave (si tu escena ya tiene iluminación propia,
+    pon AjustesVisuales.aplicarAmbiente = false antes de cargar la escena).
+  - Baja el plano cercano de la cámara a 5 cm (menos recorte al acercarse a una pared).
+
+RENDIMIENTO (Meta Quest)
+  - El modelo con pupitres tiene unos 21.000 objetos (5 pisos × ~250 pupitres). Para gafas autónomas
+    se recomienda desactivar los pupitres de los pisos superiores (objetos "Pupitre..." dentro del modelo)
+    o usar la versión sin pupitres.
+  - El shader doble cara es de una sola pasada (no duplica geometría).
+
+DISTRIBUCIÓN DE LA PLANTA BAJA (referencia, coordenadas del modelo ya alineado)
+  - Ala norte de salones: z −11 a −21 (salones de unos 5,4 m de ancho entre x −48 y −21).
+  - Zona central cubierta: z −24,4 a −30,4.   Ala sur: z −30 a −40.
