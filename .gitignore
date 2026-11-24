@@ -1,0 +1,17 @@
+*.zip
+*.apk
+*.aab
+*.rar
+*.7z
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+MemoryCaptures/
+.vs/
+*.csproj
+*.sln
+*.user
